@@ -260,5 +260,4 @@ paket-files/
 __pycache__/
 *.pyc
 /webdeploypackages
-/MyManagementWeb/Publish.ps1
-/MyManagementWeb/publish.bat
+
