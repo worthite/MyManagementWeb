@@ -1,52 +1,55 @@
-﻿using MyManagementWeb.Classes;
+﻿using Microsoft.Azure.KeyVault;
+using Microsoft.Azure.Services.AppAuthentication;
+using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Queue;
+using MyManagementWeb.Classes;
+using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
+using System.Web.Http;
 
 namespace MyManagementWeb.Controllers
 {
-    public class ManagedApplicationsController : Controller
+    public class ManagedApplicationsController : ApiController
     {
         private static string _vaultName = ConfigurationManager.AppSettings["vaultName"];
         private static string _subscriptionId = ConfigurationManager.AppSettings["subscriptionId"];
-        
-        [System.Web.Http.HttpGet]  
-        [System.Web.Http.ActionName("Index")]
+
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.AllowAnonymous]
+        [System.Web.Http.Route("api/ManagedApplications/Test")]
+        public async Task<string> Test()
+        {
+            string t = await Task.Run(() => DateTime.UtcNow.ToLongTimeString());
+
+            return t;
+        }
+
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.AllowAnonymous]
         [System.Web.Http.Route("api/ManagedApplications/")]
-        public ActionResult Index()
+        public async Task<string> List()
         {
             ManagedApplications MyApps = new ManagedApplications();
 
-            var mylist = MyApps.ApplicationsInSubscription(_subscriptionId);
+            var mylist = await MyApps.ApplicationsInSubscription(_subscriptionId);
 
-            return View(mylist);
+            return mylist;
         }
 
-        [System.Web.Http.HttpGet]
-        [System.Web.Http.ActionName("ResourceGroup")]
-        [System.Web.Http.Route("api/ManagedApplications/ResourceGroup")]
-        public ActionResult ResourceGroup(string ResourceGroup)
-        {
-            ManagedApplications MyApps = new ManagedApplications();
-
-            var mylist = MyApps.ApplicationsInResourceGroup(_subscriptionId, ResourceGroup);
-
-            return View(mylist);
-        }
 
         [System.Web.Http.HttpGet]
-        [System.Web.Http.ActionName("Id")]
         [System.Web.Http.Route("api/ManagedApplications/Id")]
-        public ActionResult Id(string applicationId)
+        public async Task<string> Id(string applicationId)
         {
             ManagedApplications MyApps = new ManagedApplications();
 
-            var mylist = MyApps.ApplicationId(applicationId);
+            var mylist = await MyApps.ApplicationId(applicationId);
 
-            return View(mylist);
+            return mylist;
         }
 
     }
