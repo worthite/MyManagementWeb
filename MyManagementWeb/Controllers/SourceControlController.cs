@@ -73,7 +73,7 @@ namespace MyManagedWeb.Controllers
 
         }
 
-        public static async Task<string> GetSecret(string vaultName, string nameKey)
+        private static async Task<string> GetSecret(string vaultName, string nameKey)
         {
 
 
