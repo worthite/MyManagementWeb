@@ -15,7 +15,7 @@ namespace MyManagementWeb.Controllers
         
         [System.Web.Http.HttpGet]  
         [System.Web.Http.ActionName("Index")]
-        [System.Web.Http.Route("api/ManagedApplication/")]
+        [System.Web.Http.Route("api/ManagedApplications/")]
         public ActionResult Index()
         {
             ManagedApplications MyApps = new ManagedApplications();
@@ -27,7 +27,7 @@ namespace MyManagementWeb.Controllers
 
         [System.Web.Http.HttpGet]
         [System.Web.Http.ActionName("ResourceGroup")]
-        [System.Web.Http.Route("api/ManagedApplication/ResourceGroup")]
+        [System.Web.Http.Route("api/ManagedApplications/ResourceGroup")]
         public ActionResult ResourceGroup(string ResourceGroup)
         {
             ManagedApplications MyApps = new ManagedApplications();
@@ -39,7 +39,7 @@ namespace MyManagementWeb.Controllers
 
         [System.Web.Http.HttpGet]
         [System.Web.Http.ActionName("Id")]
-        [System.Web.Http.Route("api/ManagedApplication/Id")]
+        [System.Web.Http.Route("api/ManagedApplications/Id")]
         public ActionResult Id(string applicationId)
         {
             ManagedApplications MyApps = new ManagedApplications();
