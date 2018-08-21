@@ -49,7 +49,7 @@ namespace MyManagementWeb.Controllers
 
         public async Task<ActionResult> ManagedIdentities(string ResourceGroup)
         {
-            ViewBag.Message = "Your application List page.";
+            ViewBag.Message = "Your Managed Identities List page.";
 
             ManagedApplicationData MyApps = new ManagedApplicationData();
 
