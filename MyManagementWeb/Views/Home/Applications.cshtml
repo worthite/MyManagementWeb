@@ -1,0 +1,65 @@
+﻿@model IEnumerable<MyManagementWeb.Classes.ManagedApplication>
+
+@{
+    ViewBag.Title = "Applications";
+}
+
+<h2>Applications</h2>
+
+<table class="table">
+    <tr>
+        <th></th>
+    </tr>
+    
+    @foreach (var item in Model)
+    {
+    <tr>
+        <td>
+            @if(item.Instance.provisioningState != "Not Found") {
+            <a href="~/Home/Application?ApplicationId=@item.Id">
+                @item.Name
+            </a>
+            } else {
+                @item.Name
+            }
+        </td>
+        <td>
+            @item.Properties.ProvisioningState
+        </td>
+        <td>
+            @item.Instance.provisioningState
+        </td>
+        <td>
+            <a href="https://@item.Id">
+                @item.Instance.managedResourceGroupId
+            </a>
+        </td>
+    </tr>
+    }
+
+</table>
+
+@section Scripts {
+    <script>
+
+        (function () {
+            "use strict";
+
+            var protocol = location.protocol === "https:" ? "wss:" : "ws:";
+            var wsUri = protocol + "//" + window.location.host;
+            var socket = new WebSocket(wsUri);
+
+            socket.onmessage = function (e) {
+                var chart = JSON.parse(e.data);
+                var image;
+
+                if (chart.ChartType === ChartType.RequestEngineChartType) {
+                    image = document.getElementById('RequestChart');
+                    image.src = "data:image;base64," + chart.InternalImage + "";
+                }
+
+            };
+
+        }());
+    </script>
+}

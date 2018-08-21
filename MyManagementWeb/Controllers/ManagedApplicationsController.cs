@@ -1,13 +1,6 @@
-﻿using Microsoft.Azure.KeyVault;
-using Microsoft.Azure.Services.AppAuthentication;
-using Microsoft.WindowsAzure.Storage;
-using Microsoft.WindowsAzure.Storage.Queue;
-using MyManagementWeb.Classes;
-using Newtonsoft.Json;
+﻿using MyManagementWeb.Classes;
 using System;
 using System.Configuration;
-using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 
@@ -29,11 +22,12 @@ namespace MyManagementWeb.Controllers
         }
 
         [System.Web.Http.HttpGet]
-        [System.Web.Http.AllowAnonymous]
+        [System.Web.Http.Authorize]
         [System.Web.Http.Route("api/ManagedApplications/")]
         public async Task<string> List()
         {
-            ManagedApplications MyApps = new ManagedApplications();
+        
+            ManagedApplicationData MyApps = new ManagedApplicationData();
 
             var mylist = await MyApps.ApplicationsInSubscription(_subscriptionId);
 
@@ -45,9 +39,9 @@ namespace MyManagementWeb.Controllers
         [System.Web.Http.Route("api/ManagedApplications/Id")]
         public async Task<string> Id(string applicationId)
         {
-            ManagedApplications MyApps = new ManagedApplications();
+            ManagedApplicationData MyApps = new ManagedApplicationData();
 
-            var mylist = await MyApps.ApplicationId(applicationId);
+            var mylist = await MyApps.ApplicationId(_subscriptionId,applicationId);
 
             return mylist;
         }
