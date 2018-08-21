@@ -397,10 +397,7 @@
     <Compile Include="Classes\ServicePrincipal.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\ManagementController.cs" />
     <Compile Include="Controllers\SourceControlController.cs" />
-    <Compile Include="Extensions\ManagementWebSocketManager.cs" />
-    <Compile Include="Extensions\ManagementWebSocketMiddleware.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
