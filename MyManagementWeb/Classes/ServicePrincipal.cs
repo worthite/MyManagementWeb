@@ -1,4 +1,5 @@
-﻿using Microsoft.IdentityModel.Clients.ActiveDirectory;
+﻿using Microsoft.Azure.Services.AppAuthentication;
+using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -31,7 +32,7 @@ namespace MyManagementWeb.Classes
         public static async Task<string> GetAzureToken()
         {
             string token = "";
-         if(LocalHost == "true") { token = await GetLocalHostAzureToken(); }
+            if(LocalHost == "true") { token = await GetLocalHostAzureToken(); }
             else { token = await GetMSIToken(); }
 
             return token;
@@ -51,14 +52,13 @@ namespace MyManagementWeb.Classes
 
         internal static async Task<string> GetMSIToken()
         {
-            string apiversion = "2017-09-01";
+
             string resource = "https://management.azure.com/";
 
-            HttpClient client = new HttpClient();
-            client.DefaultRequestHeaders.Add("Secret", Environment.GetEnvironmentVariable("MSI_SECRET"));
-            var t = await client.GetAsync(String.Format("{0}/?resource={1}&api-version={2}", Environment.GetEnvironmentVariable("MSI_ENDPOINT"), resource, apiversion));
+            var azureServiceTokenProvider = new AzureServiceTokenProvider();
+            string accessToken = await azureServiceTokenProvider.GetAccessTokenAsync(resource);
 
-            return t.ToString();
+            return accessToken;
         }
 
 
